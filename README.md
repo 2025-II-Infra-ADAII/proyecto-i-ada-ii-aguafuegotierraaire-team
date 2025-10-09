@@ -1,9 +1,9 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/GxFB-nwe)
 
-# Asignación: [Nombre de la asignación]
+# Asignación: Proyecto I ADA II - RIEGO ÓPTIMO
 
-**Fecha:** [DD/MM/AAAA]
-**Curso:** [Nombre del Curso]
+**Fecha:** 09 / 10 / 2025
+**Curso:** AnÁlisis de algoritmos II
 
 ---
 
@@ -11,12 +11,13 @@
 
 | Nombre Completo       | Código  | Rol            | Correo Electrónico       |
 |-----------------------|---------|----------------|--------------------------|
-| [Estudiante 1]        | 123456  | [Líder/Colab.] | [correo1@institucion.edu]|
-| [Estudiante 2]        | 123457  | [Colaborador]  | [correo2@institucion.edu]|
-| [Estudiante 3]        | 123458  | [Colaborador]  | [correo3@institucion.edu]|
+| Dilan Mauricio Lemos       | 202359416 | [Líder/Colab.] | [dilan.lemos@correounivalle.edu.co]|
+| Jaime Andrés Noreña        | 202359523  | [Colaborador]  | [jaime.norena@correounivalle.edu.co]|
+| Diego Fernando Lenis        | 202359540  | [Colaborador]  | [correo3@correounivalled.edu.co]|
+| Gabriel Uraza       | XXXXXXXXX  | [Colaborador]  | [correo4@correounivalled.edu.co]|
+
 
 ---
 
 ## 📌 Descripción del Taller
-[Breve párrafo explicando el propósito y objetivos del taller (4-6 líneas). Ejemplo:]
-*"Este taller busca analizar [tema principal] mediante [metodología]. Los objetivos incluyen [objetivo 1], [objetivo 2] y [objetivo 3], aplicando conceptos vistos en clase como [concepto relevante]."*
+Este proyecto busca analizar el problema de optimización combinatoria del riego óptimo en fincas agrícolas mediante tres estrategias algorítmicas distintas: fuerza bruta, algoritmo voraz y programación dinámica. Los objetivos incluyen implementar cada una de estas técnicas para minimizar el sufrimiento de los cultivos por falta de agua, comparar su rendimiento computacional en términos de complejidad temporal y espacial, y determinar cuál estrategia ofrece la mejor relación entre optimalidad y eficiencia. Este trabajo aplica conceptos fundamentales vistos en el curso de Análisis de Algoritmos II, como subestructura óptima, elección voraz, tablas de programación dinámica y análisis de complejidad asintótica.
