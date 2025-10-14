@@ -14,7 +14,7 @@
 | Dilan Mauricio Lemos       | 202359416 | [Líder/Colab.] | [dilan.lemos@correounivalle.edu.co]|
 | Jaime Andrés Noreña        | 202359523  | [Colaborador]  | [jaime.norena@correounivalle.edu.co]|
 | Diego Fernando Lenis        | 202359540  | [Colaborador]  | [correo3@correounivalled.edu.co]|
-| Gabriel Uraza       | XXXXXXXXX  | [Colaborador]  | [correo4@correounivalled.edu.co]|
+| Gabriel Uraza García      | 2359594  | [Colaborador]  | [gabriel.uraza@correounivalled.edu.co]|
 
 
 ---
