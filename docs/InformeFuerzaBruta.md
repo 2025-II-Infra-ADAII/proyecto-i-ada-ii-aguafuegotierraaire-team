@@ -5,9 +5,10 @@
 El **problema del riego óptimo** consiste en determinar el orden en que deben regarse los tablones de una finca utilizando un único sistema de riego, de modo que se minimice el sufrimiento de los cultivos por falta de agua.
 
 Cada tablón tiene tres características:
-- \( ts_i \): tiempo máximo que puede sobrevivir sin riego (días),
-- \( tr_i \): tiempo que tarda en regarse (días),
-- \( p_i \): prioridad (entero entre 1 y 4, siendo 4 la más alta).
+
+* $ts_i$: tiempo máximo que puede sobrevivir sin riego (días),
+* $tr_i$: tiempo que tarda en regarse (días),
+* $p_i$: prioridad (entero entre 1 y 4, siendo 4 la más alta).
 
 El riego se realiza de forma secuencial y no hay costo por mover el sistema de riego entre tablones.
 
@@ -15,65 +16,72 @@ El riego se realiza de forma secuencial y no hay costo por mover el sistema de r
 
 ### Definición formal
 
-Sea una finca \( F = \langle T_0, T_1, \ldots, T_{n-1} \rangle \)  
-donde cada tablón \( T_i = \langle ts_i, tr_i, p_i \rangle \).
+Sea una finca $F = \langle T_0, T_1, \ldots, T_{n-1} \rangle$
+donde cada tablón $T_i = \langle ts_i, tr_i, p_i \rangle$.
 
-Una **programación de riego** es una permutación \( \Pi = \langle \pi_0, \pi_1, \ldots, \pi_{n-1} \rangle \) de los índices \( 0, 1, \ldots, n-1 \).
+Una **programación de riego** es una permutación $\Pi = \langle \pi_0, \pi_1, \ldots, \pi_{n-1} \rangle$ de los índices $0, 1, \ldots, n-1$.
 
-El tiempo de inicio del riego del tablón \( T_{\pi_j} \) se define como:
-\[
+El tiempo de inicio del riego del tablón $T_{\pi_j}$ se define como:
+
+$$
 t_{\Pi_{\pi_0}} = 0,\quad
 t_{\Pi_{\pi_j}} = t_{\Pi_{\pi_{j-1}}} + tr_{\pi_{j-1}} \text{ para } j \ge 1
-\]
+$$
 
-El costo por sufrimiento del tablón \( T_i \) bajo la programación \( \Pi \) es:
-\[
+El costo por sufrimiento del tablón $T_i$ bajo la programación $\Pi$ es:
+
+$$
 CRF_{\Pi}[i] = p_i \times \max(0, (t_{\Pi_i} + tr_i) - ts_i)
-\]
+$$
 
 El costo total de la finca es:
-\[
-CRF_{\Pi} = \sum_{i=0}^{n-1} CRF_{\Pi}[i]
-\]
 
-**Objetivo:** encontrar una permutación \( \Pi^* \) tal que \( CRF_{\Pi^*} \) sea mínimo.
+$$
+CRF_{\Pi} = \sum_{i=0}^{n-1} CRF_{\Pi}[i]
+$$
+
+**Objetivo:** encontrar una permutación $\Pi^*$ tal que $CRF_{\Pi^*}$ sea mínimo.
 
 ---
 
 ### Ejemplo ilustrativo
 
 Finca:
-\[
+
+$$
 F_1 = \langle (10, 3, 4), (5, 3, 3), (2, 2, 1), (8, 1, 1), (6, 4, 2) \rangle
-\]
+$$
 
 Programación propuesta:
-\[
+
+$$
 \Pi_1 = \langle 0, 1, 4, 2, 3 \rangle
-\]
+$$
 
 Cálculo de penalizaciones:
-| Tablón | ts | tr | p | t_inicio | t_fin | Penalización |
-|--------|----|----|---|-----------|--------|---------------|
-| 0 | 10 | 3 | 4 | 0 | 3 | 0 |
-| 1 | 5 | 3 | 3 | 3 | 6 | 3 |
-| 4 | 6 | 4 | 2 | 6 | 10 | 8 |
-| 2 | 2 | 2 | 1 | 10 | 12 | 10 |
-| 3 | 8 | 1 | 1 | 12 | 13 | 5 |
 
-**Costo total:** \( CRF_{\Pi_1} = 26 \)
+| Tablón | ts | tr | p | t_inicio | t_fin | Penalización |
+| ------ | -- | -- | - | -------- | ----- | ------------ |
+| 0      | 10 | 3  | 4 | 0        | 3     | 0            |
+| 1      | 5  | 3  | 3 | 3        | 6     | 3            |
+| 4      | 6  | 4  | 2 | 6        | 10    | 8            |
+| 2      | 2  | 2  | 1 | 10       | 12    | 10           |
+| 3      | 8  | 1  | 1 | 12       | 13    | 5            |
+
+**Costo total:** $CRF_{\Pi_1} = 26$
 
 ---
 
 ## 1. Lenguaje y herramientas usadas
 
-- **Lenguaje:** Python 3  
-- **Bibliotecas estándar:** `itertools` (para generar permutaciones), `time` (para mediciones de ejecución).  
-- **Motivación:** Python permite prototipar y validar algoritmos combinatorios de forma simple y legible.
+* **Lenguaje:** Python 3
+* **Bibliotecas estándar:** `itertools` (para generar permutaciones), `time` (para mediciones de ejecución).
+* **Motivación:** Python permite prototipar y validar algoritmos combinatorios de forma simple y legible.
 
 ---
 
 ## 2. Estructura del proyecto
+
 ```
 proyecto-i-ada-ii-aguafuegotierraaire-team/
 ├── docs/
@@ -91,6 +99,7 @@ proyecto-i-ada-ii-aguafuegotierraaire-team/
 ├── .github/workflows/
 │ └── pipeline.yml # CI/CD (falta hacer esto xd)
 ```
+
 ---
 
 ## 3. Ejecución del proyecto
@@ -99,17 +108,17 @@ La ejecución se hace desde consola, (teniendo en cuenta que estamos desde la ra
 
 ```bash
 python3 src/roFB.py
-
 ```
 
-Donde el archivo "roFB.py" ejecuta y trabaja con un archivo externo el cual es "finca.txt" el cual se encarga de suministar los datos de entrada correctos para una finca y sus tablones
+Donde el archivo "roFB.py" ejecuta y trabaja con un archivo externo, "finca.txt", que suministra los datos de entrada correctos para una finca y sus tablones.
 
 #### 3.1 Ejemplo formato de entrada
-La entrada proporcionada en el txt cuenta con la cantidad de tablones en una finca en la primera línea, y seguido a este valor y una por línea sigue cada uno de los tablones de esta misma con sus respectivos datos para suplir:
 
-- \( ts_i \): tiempo máximo que puede sobrevivir sin riego (días),
-- \( tr_i \): tiempo que tarda en regarse (días),
-- \( p_i \): prioridad (entero entre 1 y 4, siendo 4 la más alta).
+La entrada proporcionada en el txt cuenta con la cantidad de tablones en una finca en la primera línea, y seguido a este valor, cada línea contiene los datos de un tablón:
+
+* $ts_i$: tiempo máximo que puede sobrevivir sin riego (días),
+* $tr_i$: tiempo que tarda en regarse (días),
+* $p_i$: prioridad (entero entre 1 y 4, siendo 4 la más alta).
 
 ```
 5 
@@ -118,12 +127,12 @@ La entrada proporcionada en el txt cuenta con la cantidad de tablones en una fin
 2,2,1
 8,1,1
 6,4,2
-
-
 ```
 
 #### 3.2 Ejemplo formato de salida
-Al ejecutar y que el código termine se mostrará el formato de salida correspondiente a:
+
+Al ejecutar y que el código termine se mostrará:
+
 ```
 Tiempo de ejecución del código
 
@@ -135,41 +144,46 @@ Tablon[d]
 Tablon[n-1]
 ```
 
-Donde el orden de los tablones de arriba hacia abajo será el más óptimo para regar, siendo encontrado por la implementación del código.
+Donde el orden de los tablones de arriba hacia abajo será el más óptimo para regar, según el algoritmo.
 
---- 
+---
 
 ## 4. Ideas de solución — Fuerza Bruta
 
-La estrategia de fuerza bruta evalúa todas las permutaciones posibles de los tablones y selecciona aquella que produce el menor costo total 
-\[CRF_{\Pi}\]
+La estrategia de fuerza bruta evalúa todas las permutaciones posibles de los tablones y selecciona aquella que produce el menor costo total:
+
+$$
+CRF_{\Pi}
+$$
 
 ### 4.1. Descripción del algoritmo
 
-Inicialmente se lee la finca desde el archivo txt, y genera todas las permutacionesa posibles de los índices: 
-\[[0,1,...,n−1]\].
-Y para cada permutación:
+Inicialmente se lee la finca desde el archivo txt y se generan todas las permutaciones posibles de los índices:
 
-- Se calculan los tiempos de inicio y fin de riego.
-- Se calcula la penalización de cada tablón.
-- Se acumula el costo total.
+$$
+[0,1,\dots,n-1]
+$$
 
-Y finalmente se elige la permutación de menos costo, es decir la más óptima.
+Para cada permutación:
 
-Mostrado matemáticamente sería:
+* Se calculan los tiempos de inicio y fin de riego.
+* Se calcula la penalización de cada tablón.
+* Se acumula el costo total.
 
-\[
-\Pi^* = \arg_{\Pi \in S_n} \min \, CRF_{\Pi}
-\]
+Finalmente se elige la permutación de menor costo, es decir, la más óptima:
 
+$$
+\Pi^* = \arg_{\Pi \in S_n} \min CRF_{\Pi}
+$$
 
+donde $S_n$ es el conjunto de todas las permutaciones de $n$ tablones.
 
-donde 𝑆𝑛 es el conjunto de todas las permutaciones de 𝑛 tablones.
+---
 
---- 
 ### 4.2 Ejemplo aplicado
 
- Usando una finca F1 como base para el ejemplo, con un total de 5 tablones los cuales son:
+Usando una finca $F_1$ con 5 tablones:
+
 ```
 T[0] = 10,3,4
 T[1] = 5,3,3
@@ -177,17 +191,21 @@ T[2] = 2,2,1
 T[3] = 8,1,1
 T[4] = 6,4,2
 ```
-El algoritmo evaluará todas las posibles permutaciones:
-\[
-5! = 120
-\]
-Cada una siendo evaluada exactamente igual a la anterior.
 
-Ahora supongamos (para practicidad y eficiencia) que se ejecutaron una cantidad n de permutaciones y sigue la óptima para este ejercicio:
-\[
-\Pi^* = <2, 1, 3, 0, 4>
-\]
-Se devuelve su conjunto con el costo mínimo, según su cálculo:
+El algoritmo evaluará todas las posibles permutaciones:
+
+$$
+5! = 120
+$$
+
+Supongamos que la permutación óptima es:
+
+$$
+\Pi^* = \langle 2, 1, 3, 0, 4 \rangle
+$$
+
+
+El cálculo del tiempo de inicio, fin y penalizaciones sería:
 \[
 \begin{aligned}
 t_2&=0,\quad t_2+tr_2=0+2=2 \\
@@ -205,31 +223,49 @@ CRF_{\Pi^*}&=\sum_{i=0}^{4} CRF_{\Pi^*}[i]=14
 \end{aligned}
 \]
 
---- 
-### 4.3  Análisis de Complejidad
-Generar todas las permutaciones: 
-\[𝑂(𝑛!)\]
+---
 
-Evaluar cada permutación: 
-\[𝑂(𝑛)\]
+### 4.3 Análisis de Complejidad
 
+Generar todas las permutaciones:
 
-Complejidad total: 
-\[𝑂(𝑛!×𝑛)\]
+$$
+O(n!)
+$$
 
-Complejidad espacial: 
-\[𝑂(𝑛)\]
+Evaluar cada permutación:
 
-Para valores de 𝑛 > 10, el tiempo se vuelve impracticable, La fuerza bruta solo es útil para casos pequeños o como referencia de optimalidad.
+$$
+O(n)
+$$
+
+Complejidad total:
+
+$$
+O(n! \times n)
+$$
+
+Complejidad espacial:
+
+$$
+O(n)
+$$
+
+Para valores de $n > 10$, el tiempo se vuelve impracticable. La fuerza bruta solo es útil para casos pequeños o como referencia de optimalidad.
 
 ---
+
 ### 4.4 Evaluación
-El algoritmo explora todo el espacio de soluciones posibles, por lo que garantiza la solución óptima teórica, no existen casos donde falle, aunque puede tardar demasiado tiempo para instancias grandes.
+
+El algoritmo explora todo el espacio de soluciones posibles, por lo que garantiza la solución óptima teórica. No existen casos donde falle, aunque puede tardar demasiado tiempo para instancias grandes.
 
 ---
+
 ## 5. Partes Importantes de Código
-##### 5.1. Leerfinca() 
-se encarga de leer el archivo de entrada y devolver los tablones con el orden (ts, tr, p)
+
+##### 5.1. leer_finca()
+
+Lee el archivo de entrada y devuelve los tablones con el orden $(ts, tr, p)$
 
 ```python
 def leer_finca():
@@ -241,8 +277,10 @@ def leer_finca():
     return finca
 ```
 
-##### 5.2. Calcular_tiempos_inicio(finca, permutacion)
-Determina el tiempo de inicio de riego para cada tablón según el orden de la permutación donde el primer tablón comienza en 𝑡=0 y cada uno inicia después de que termina el anterior.
+##### 5.2. calcular_tiempos_inicio(finca, permutacion)
+
+Calcula el tiempo de inicio de riego para cada tablón según el orden de la permutación:
+
 ```python
 def calcular_tiempos_inicio(finca, permutacion):
     tiempos = {}
@@ -256,8 +294,10 @@ def calcular_tiempos_inicio(finca, permutacion):
     return tiempos
 ```
 
-##### 5.3. calculoCostoPerm(ficna, permutacion)
-Itera sobre todas las permutaciones, calcula sus costos y devuelve (mejor_perm, mejor_costo).
+##### 5.3. calculoCostoPerm(finca, permutacion)
+
+Calcula el costo total de una permutación:
+
 ```python
 def calculoCostoPerm(finca, permutacion):
     tiempos_inicio = calcular_tiempos_inicio(finca, permutacion)
@@ -270,8 +310,11 @@ def calculoCostoPerm(finca, permutacion):
         costo_total += penalizacion
     return costo_total
 ```
+
 ##### 5.4. roFB()
-Implementa la búsqueda exhaustiva de todas las permutaciones posibles usando itertools.permutations, luego evalúa cada permutación y guarda la que produzca el costo mínimo.
+
+Búsqueda exhaustiva de todas las permutaciones usando `itertools.permutations`:
+
 ```python
 def roFB(finca):
     n = len(finca)
@@ -290,8 +333,10 @@ def roFB(finca):
     
     return (list(mejor_permutacion), mejor_costo)
 ```
+
 ##### 5.5. main()
-Mide el tiempo total de ejecución, ejecuta el algoritmo y muestra la salida en el formato requerido por el PDF del proyecto.
+
+Ejecuta el algoritmo y muestra resultados:
 
 ```python
 def main():
@@ -311,6 +356,7 @@ def main():
 ```
 
 ##### 5.6. Resumen de flujo
+
 ```mermaid
 flowchart TD
 A[Inicio] --> B[Leer archivo finca.txt]
@@ -319,35 +365,41 @@ C --> D[Calcular tiempos de inicio]
 D --> E[Calcular costo CRFΠ]
 E --> F[Actualizar mejor costo]
 F -->|Todas evaluadas| G[Mostrar costo y orden óptimo]
-
 ```
---- 
+
+---
+
 ## 6. Resultados Experimentales
 
-falta esto
+Falta esto
 
---- 
+---
+
 ## 7. Pipeline CI/CD
-esto también
 
---- 
+Falta esto también
+
+---
+
 ## 8. Conclusiones
 
-La técnica de **fuerza bruta** permitió validar completamente el modelo de cálculo del costo total de riego y comprender el comportamiento del problema del riego óptimo desde un enfoque exhaustivo.  
-Al evaluar todas las permutaciones posibles de los tablones, se garantiza que la solución encontrada es **óptima** (pero no eficiente), lo cual sirve como punto de referencia para comparar posteriormente las solución voráz y/o dinámica.
+La técnica de **fuerza bruta** permitió validar completamente el modelo de cálculo del costo total de riego y comprender el comportamiento del problema del riego óptimo desde un enfoque exhaustivo.
+Al evaluar todas las permutaciones posibles de los tablones, se garantiza que la solución encontrada es **óptima** (pero no eficiente), lo cual sirve como punto de referencia para comparar posteriormente las soluciones voraz y/o dinámica.
 
-Durante las pruebas realizadas con diferentes tamaños de instancias, se observó que el algoritmo cumple su propósito teórico: encontrar siempre el orden de riego que minimiza la penalización total.  
-Para casos pequeños, la ejecución fue rápida y permitió verificar manualmente los resultados. Sin embargo, conforme el número de tablones aumentó, el tiempo de ejecución creció exponencialmente, confirmando la **complejidad factorial \(O(n! \times n)\)** esperada.  
+Durante las pruebas realizadas con diferentes tamaños de instancias, se observó que el algoritmo cumple su propósito teórico: encontrar siempre el orden de riego que minimiza la penalización total.
+Para casos pequeños, la ejecución fue rápida y permitió verificar manualmente los resultados. Sin embargo, conforme el número de tablones aumentó, el tiempo de ejecución creció exponencialmente, confirmando la **complejidad factorial $O(n! \times n)$** esperada.
 A pesar de esto, la implementación se mantuvo estable y correcta en todos los escenarios probados.
 
 El análisis experimental evidenció que la fuerza bruta es útil principalmente para:
-- Validar el comportamiento de las fórmulas y el cálculo del costo \(CRF_{\Pi}\).
-- Servir como **referencia de optimalidad** para comparar con los métodos **voraz** y **dinámico**, los cuales buscarán reducir el tiempo de cómputo sacrificando, potencialmente, optimalidad.
-- Comprobar la correcta lectura de archivos, cálculo de tiempos de inicio y evaluación de penalizaciones.
+
+* Validar el comportamiento de las fórmulas y el cálculo del costo $CRF_{\Pi}$.
+* Servir como **referencia de optimalidad** para comparar con los métodos **voraz** y **dinámico**, los cuales buscarán reducir el tiempo de cómputo sacrificando, potencialmente, optimalidad.
+* Comprobar la correcta lectura de archivos, cálculo de tiempos de inicio y evaluación de penalizaciones.
 
 En conclusión, la técnica de fuerza bruta:
-- Garantiza soluciones exactas y verificables.  
-- Presenta un crecimiento exponencial en el tiempo de ejecución al aumentar el tamaño del problema.  
-- Constituye la base para evaluar la efectividad y precisión de los métodos más eficientes que se implementarán posteriormente.  
- 
 
+* Garantiza soluciones exactas y verificables.
+* Presenta un crecimiento exponencial en el tiempo de ejecución al aumentar el tamaño del problema.
+* Constituye la base para evaluar la efectividad y precisión de los métodos más eficientes que se implementarán posteriormente.
+
+---
