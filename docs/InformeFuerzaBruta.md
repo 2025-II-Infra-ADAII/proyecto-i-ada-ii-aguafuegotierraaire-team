@@ -206,7 +206,7 @@ $$
 
 
 El cálculo del tiempo de inicio, fin y penalizaciones sería:
-$$
+$$S
 \begin{aligned}
 t_2&=0,\quad t_2+tr_2=0+2=2 \\
 t_1&=2,\quad t_1+tr_1=2+3=5 \\
@@ -224,7 +224,7 @@ CRF_{\Pi^*}[4]&=2\cdot\max(0,13-6)=2\cdot7=14 \\
 \\
 CRF_{\Pi^*}&=\sum_{i=0}^{4} CRF_{\Pi^*}[i]=14
 \end{aligned}
-$$
+$$$
 
 ---
 
