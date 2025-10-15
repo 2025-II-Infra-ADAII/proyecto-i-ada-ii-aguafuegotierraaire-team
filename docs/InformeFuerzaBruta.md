@@ -40,7 +40,7 @@ $$
 CRF_{\Pi} = \sum_{i=0}^{n-1} CRF_{\Pi}[i]
 $$
 
-**Objetivo:** encontrar una permutación $\Pi^*$ tal que $CRF_{\Pi^*}$ sea mínimo.
+**Objetivo:** encontrar una permutación $$\Pi^*$$ tal que $$CRF_{\Pi^*}$$ sea mínimo.
 
 ---
 
@@ -206,22 +206,23 @@ $$
 
 
 El cálculo del tiempo de inicio, fin y penalizaciones sería:
-\[
+$$
 \begin{aligned}
-t_2&=0,\quad t_2+tr_2=0+2=2 \\
-t_1&=2,\quad t_1+tr_1=2+3=5 \\
-t_3&=5,\quad t_3+tr_3=5+1=6 \\
-t_0&=6,\quad t_0+tr_0=6+3=9 \\
-t_4&=9,\quad t_4+tr_4=9+4=13 \\
-\text{Penalizaciones:}&\\
-CRF_{\Pi^*}[0]&=4\cdot\max(0,9-10)=0 \\
-CRF_{\Pi^*}[1]&=3\cdot\max(0,5-5)=0 \\
-CRF_{\Pi^*}[2]&=1\cdot\max(0,2-2)=0 \\
-CRF_{\Pi^*}[3]&=1\cdot\max(0,6-8)=0 \\
-CRF_{\Pi^*}[4]&=2\cdot\max(0,13-6)=2\cdot7=14 \\
-CRF_{\Pi^*}&=\sum_{i=0}^{4} CRF_{\Pi^*}[i]=14
+t_2 &= 0, & t_2 + tr_2 &= 0 + 2 = 2 \\
+t_1 &= 2, & t_1 + tr_1 &= 2 + 3 = 5 \\
+t_3 &= 5, & t_3 + tr_3 &= 5 + 1 = 6 \\
+t_0 &= 6, & t_0 + tr_0 &= 6 + 3 = 9 \\
+t_4 &= 9, & t_4 + tr_4 &= 9 + 4 = 13 \\
+\text{Penalizaciones:} & & \\
+CRF_{\Pi^*}[0] &= 4 \cdot \max(0, 9 - 10) = 0 \\
+CRF_{\Pi^*}[1] &= 3 \cdot \max(0, 5 - 5) = 0 \\
+CRF_{\Pi^*}[2] &= 1 \cdot \max(0, 2 - 2) = 0 \\
+CRF_{\Pi^*}[3] &= 1 \cdot \max(0, 6 - 8) = 0 \\
+CRF_{\Pi^*}[4] &= 2 \cdot \max(0, 13 - 6) = 14 \\
+CRF_{\Pi^*} &= \sum_{i=0}^{4} CRF_{\Pi^*}[i] = 14
 \end{aligned}
-\]
+$$
+
 
 ---
 
