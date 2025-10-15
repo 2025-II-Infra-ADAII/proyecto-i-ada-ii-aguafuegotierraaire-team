@@ -74,7 +74,7 @@ Cálculo de penalizaciones:
 ---
 
 ## 2. Estructura del proyecto
-
+```
 proyecto-i-ada-ii-aguafuegotierraaire-team/
 ├── docs/
 │   └── fuerza_bruta.md # Este informe
@@ -90,7 +90,7 @@ proyecto-i-ada-ii-aguafuegotierraaire-team/
 ├── README.md
 ├── .github/workflows/
 │ └── pipeline.yml # CI/CD (falta hacer esto xd)
-
+```
 ---
 
 ## 3. Ejecución del proyecto
