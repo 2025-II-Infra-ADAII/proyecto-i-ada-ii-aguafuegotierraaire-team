@@ -1,14 +1,17 @@
 # Codiguito para Solución por fuerza brurisisisisisima
 from itertools import permutations
 import time
+import sys
 
-def leer_finca():
-    ruta = 'src/finca.txt'
+def leer_finca(r):
+    ruta = r
     with open(ruta, 'r') as f:
         lineas = [l.strip() for l in f.readlines() if l.strip()]
     n = int(lineas[0])
     finca = [tuple(map(int, l.split(','))) for l in lineas[1:n+1]]
+    print(finca)
     return finca
+
 
 
 def calcular_tiempos_inicio(finca, permutacion):
@@ -51,8 +54,8 @@ def roFB(finca):
     
     return (list(mejor_permutacion), mejor_costo)
 
-def main():
-    finca = leer_finca()
+def main(r='src/finca.txt'):
+    finca = leer_finca(r)
     tiempo_i = time.time()
     mejor_permutacion, mejor_costo = roFB(finca)
     tiempo_f = time.time()
@@ -65,6 +68,13 @@ def main():
     print(mejor_costo)
     for idx in mejor_permutacion:
         print(idx)
+    return mejor_costo
         
 if __name__ == "__main__":
-    main()
+    
+    if len(sys.argv) >1:
+        for i in range(1, len(sys.argv)):
+            main(f"src/{sys.argv[i]}.txt")
+    else:
+        main()
+    
