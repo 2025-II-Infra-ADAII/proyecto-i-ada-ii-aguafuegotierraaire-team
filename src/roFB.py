@@ -2,6 +2,8 @@
 from itertools import permutations
 import time
 import sys
+from math import inf
+from functools import lru_cache
 
 def leer_finca(r):
     ruta = r
@@ -73,6 +75,45 @@ def roV(finca):
     costo = calculoCostoPerm(finca, indices_ordenados)
     return (indices_ordenados, costo)
 
+def roD(finca):
+    ts = [t._0 for t in finca]
+    tr = [t._2 for t in finca]
+    p = [t._3 for t in finca]
+    """
+    ts: lista de deadlines (tiempo de supervivencia) [ts_0, ...]
+    tr: lista de duraciones de riego [tr_0, ...]
+    p:  lista de prioridades (pesos) [p_0, ...]
+    Devuelve: (min_cost, best_order) donde best_order es lista de indices en orden de riego.
+    Requiere: tr, ts enteros y n pequeño (p.ej. n <= 18).
+    """
+    n = len(ts)
+    T_total = sum(tr)
+
+    @lru_cache(maxsize=None)
+    def solve(mask, t):
+        # mask: bits de tareas ya realizadas (1 = realizada)
+        # t: tiempo actual (completación acumulada)
+        if mask == (1 << n) - 1:
+            return 0, ()   # costo 0 y orden vacío (ya no queda nada)
+        best_cost = inf
+        best_order = None
+        # probar incluir cada trabajo no hecho en siguiente posición
+        for i in range(n):
+            if (mask >> i) & 1:
+                continue
+            new_t = t + tr[i]
+            tardanza = max(0, new_t - ts[i])
+            add_cost = p[i] * tardanza
+            sub_cost, sub_order = solve(mask | (1 << i), new_t)
+            total_cost = add_cost + sub_cost
+            if total_cost < best_cost:
+                best_cost = total_cost
+                best_order = (i,) + sub_order
+        return best_cost, best_order
+
+    min_cost, order = solve(0, 0)
+    return min_cost, order
+
 def main(r='src/finca.txt'):
     # === BLOQUE FUERZA BRUTA ===
     finca = leer_finca(r)
@@ -99,7 +140,19 @@ def main(r='src/finca.txt'):
     print("=======================================================================")
     print("Tiempo de ejecución:", tiempo_f_v - tiempo_i_v)
     print(costo_v)
+    # === BLOQUE DINAMICO ===
+    tiempo_i_DP = time.time()
+    perm_DP, costo_DP = roV(finca)
+    tiempo_f_DP = time.time()
     for idx in perm_v:
+        print(idx)
+
+    print("\n=======================================================================")
+    print("RESULTADO DINAMICO")
+    print("=======================================================================")
+    print("Tiempo de ejecución:", tiempo_f_DP - tiempo_i_DP)
+    print(costo_DP)
+    for idx in perm_DP:
         print(idx)
     return mejor_costo
     
