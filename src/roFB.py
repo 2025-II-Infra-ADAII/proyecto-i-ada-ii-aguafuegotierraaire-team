@@ -54,7 +54,27 @@ def roFB(finca):
     
     return (list(mejor_permutacion), mejor_costo)
 
+def roV(finca):
+    """
+    Algoritmo voraz:
+    Ordena los tablones por la razón p/ts descendente (mayor prioridad y menor tiempo de supervivencia primero),
+    en caso de empate, por menor tiempo de riego (tr).
+    Devuelve (permutacion, costo)
+    """
+    n = len(finca)
+    if n == 0:
+        return ([], 0)
+
+    # Orden voraz: prioridad alta y supervivencia baja primero
+    indices_ordenados = sorted(range(n),
+                               key=lambda i: (-finca[i][2] / finca[i][0], finca[i][1]))
+
+    # Calculamos costo igual que en fuerza bruta
+    costo = calculoCostoPerm(finca, indices_ordenados)
+    return (indices_ordenados, costo)
+
 def main(r='src/finca.txt'):
+    # === BLOQUE FUERZA BRUTA ===
     finca = leer_finca(r)
     tiempo_i = time.time()
     mejor_permutacion, mejor_costo = roFB(finca)
@@ -68,8 +88,21 @@ def main(r='src/finca.txt'):
     print(mejor_costo)
     for idx in mejor_permutacion:
         print(idx)
+
+     # === BLOQUE VORAZ ===
+    tiempo_i_v = time.time()
+    perm_v, costo_v = roV(finca)
+    tiempo_f_v = time.time()
+
+    print("\n=======================================================================")
+    print("RESULTADO VORAZ")
+    print("=======================================================================")
+    print("Tiempo de ejecución:", tiempo_f_v - tiempo_i_v)
+    print(costo_v)
+    for idx in perm_v:
+        print(idx)
     return mejor_costo
-        
+    
 if __name__ == "__main__":
     
     if len(sys.argv) >1:
