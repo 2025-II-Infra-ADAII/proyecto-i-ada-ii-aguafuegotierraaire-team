@@ -16,9 +16,8 @@ El riego se realiza de manera **secuencial**, sin superposición, y el tiempo de
 
 ## 1. Formalización del problema
 
-Sea una finca:
 $$
-F = \langle T_0, T_1, \ldots, T_{n-1} \rangle,
+F =  \langle T_0, T_1, \ldots, T_{n-1} \rangle,
 $$
 donde cada tablón está definido como:
 $$
@@ -26,17 +25,21 @@ T_i = \langle ts_i, tr_i, p_i \rangle.
 $$
 
 Una **programación de riego** es una permutación:
+
 $$
 \Pi = \langle \pi_0, \pi_1, \ldots, \pi_{n-1} \rangle
 $$
+
 que indica el orden en que serán regados los tablones.
 
 El tiempo de inicio del riego para cada tablón se calcula como:
+
 $$
 t_{\Pi_{\pi_0}} = 0, \quad t_{\Pi_{\pi_j}} = t_{\Pi_{\pi_{j-1}}} + tr_{\pi_{j-1}}, \quad j \ge 1.
 $$
 
 El **costo total** (sufrimiento) asociado a una programación $\Pi$ es:
+
 $$
 CRF_{\Pi} = \sum_{i=0}^{n-1} p_i \times \max(0, (t_{\Pi_i} + tr_i) - ts_i)
 $$
@@ -63,6 +66,7 @@ $$
 donde el bit $i$-ésimo indica si el tablón $T_i$ ya fue regado ($1$) o no ($0$).
 
 Para cada estado (máscara), se almacena:
+
 $$
 dp[\text{mask}] = (\text{costo mínimo}, \text{último tablón regado}, \text{tiempo acumulado})
 $$
@@ -72,10 +76,11 @@ $$
 Desde un estado $\text{mask}$ (conjunto de tablones ya regados), se puede transitar a un nuevo estado agregando cualquier tablón $i$ no regado:
 
 $$
-\text{nuevo\_mask} = \text{mask} \mid (1 \ll i)
+\text{nuevo-mask} = \text{mask} \mid (1 \ll i)
 $$
 
 El costo de esta transición es:
+
 $$
 \text{penalización}_i = p_i \times \max(0, (t_{\text{actual}} + tr_i) - ts_i)
 $$
@@ -85,7 +90,7 @@ donde $t_{\text{actual}}$ es el tiempo acumulado hasta ese momento.
 ### 2.3. Recurrencia
 
 $$
-dp[\text{nuevo\_mask}] = \min \left( dp[\text{nuevo\_mask}], \, dp[\text{mask}][0] + \text{penalización}_i \right)
+dp[\text{nuevo-mask}] = \min \left( dp[\text{nuevo-mask}], dp[\text{mask}][0] + \text{penalización}_i \right)
 $$
 
 Se exploran **todas las transiciones posibles** desde cada estado, garantizando la **optimalidad global**.
@@ -189,7 +194,10 @@ def roDP(finca):
 
 ## 4. Ejemplo aplicado
 
-Para la finca: $$ F_1 = \langle (10,3,4), (5,3,3), (2,2,1), (8,1,1), (6,4,2) \rangle $$
+Para la finca: 
+
+$$ F_1 = \langle (10,3,4), (5,3,3), (2,2,1), (8,1,1), (6,4,2) \rangle $$
+
 El algoritmo explora **todos los subconjuntos** de tablones regados:
  | Máscara (binario) | Tablones regados | Costo mínimo | Último regado | 
  |  ------------------  |  ----------------  |  ------------  |  -------------  |
@@ -197,8 +205,8 @@ El algoritmo explora **todos los subconjuntos** de tablones regados:
    |  `00001`  | {0} | 0 | 0 | 
    |  `00010`  | {1} | 0 | 1 | 
    | ... | ... | ... | ... | 
-   |  `11111`  | {0,1,2,3,4} |  **26**  | - | 
-   El algoritmo garantiza encontrar la permutación con **costo mínimo absoluto**: $\Pi_{óptimo} = \langle 1, 0, 4, 2, 3 \rangle$ con $CRF = 26$. ---
+   |  `11111`  | {0,1,2,3,4} |  **14**  | 4 | 
+   El algoritmo garantiza encontrar la permutación con **costo mínimo absoluto**: $\Pi_{óptimo} = \langle 2, 1, 3, 0, 4 \rangle$ con $CRF = 14$. ---
 
 ----------
 
@@ -209,14 +217,18 @@ El algoritmo explora **todos los subconjuntos** de tablones regados:
 -   **Número de estados**: $2^n$ (todos los subconjuntos de tablones)
 -   **Transiciones por estado**: $O(n)$ (intentar regar cada tablón no regado)
 
-Por tanto: $$ O(2^n \times n) $$
+Por tanto: 
+
+$$ O(2^n \times n) $$
 
 ### 5.2. Complejidad espacial
 
 -   Almacenamiento de estados en `dp`: $O(2^n)$
 -   Cada estado almacena $O(1)$ información
 
-Por tanto: $$ O(2^n) $$
+Por tanto: 
+
+$$ O(2^n) $$
 
 ----------
 
@@ -238,49 +250,21 @@ La corrección se basa en:
 -   **Transiciones válidas**: Solo se agregan tablones no regados previamente.
 -   **Reconstrucción correcta**: La permutación se recupera siguiendo los punteros `último_tablón`.
 
-----------
-
 
 ----------
 
-## 7. Flujo general del algoritmo
 
-```mermaid
-flowchart TD
-A[Inicio] --> B[Leer finca desde archivo]
-B --> C[Inicializar dp con estado vacío]
-C --> D[Para cada máscara de 0 a 2^n-1]
-D --> E[Para cada tablón i no regado]
-E --> F[Calcular nueva máscara y costo]
-F --> G{¿Costo menor que el actual?}
-G -->|Sí| H[Actualizar dp]
-G -->|No| E
-H --> E
-E --> I{¿Más tablones?}
-I -->|Sí| E
-I -->|No| D
-D --> J{¿Más máscaras?}
-J -->|Sí| D
-J -->|No| K[Reconstruir permutación óptima]
-K --> L[Retornar solución y costo]
-
-```
-
-----------
-
-## 9. Limitaciones prácticas
-
-### 9.1. Escalabilidad
+### 7.1. Escalabilidad
 
 -   **Viable hasta $n \approx 20-22$ tablones** en hardware moderno.
 -   Para $n = 25$: $2^{25} = 33$ millones de estados.
 -   Para $n = 30$: $2^{30} = 1$ billón de estados (inviable).
 
-### 9.2. Uso de memoria
+### 8.2. Uso de memoria
 
 La tabla `dp` almacena $2^n$ estados, lo que puede consumir **gigabytes de RAM** para $n > 24$.
 
-### 9.3. Alternativas para instancias grandes
+### 8.3. Alternativas para instancias grandes
 
 Para $n > 25$, se recomienda:
 
@@ -290,7 +274,7 @@ Para $n > 25$, se recomienda:
 
 ----------
 
-## 10. Conclusiones
+## 9. Conclusiones
 
 El algoritmo de **programación dinámica** para el problema del riego óptimo ofrece una solución **óptima garantizada** con complejidad exponencial manejable para instancias medianas.
 
