@@ -40,7 +40,7 @@ $$
 CRF_{\Pi} = \sum_{i=0}^{n-1} CRF_{\Pi}[i]
 $$
 
-**Objetivo:** encontrar una permutación $$\Pi^*$$ tal que $$CRF_{\Pi^*}$$ sea mínimo.
+**Objetivo:** encontrar una permutación $\Pi^*$ tal que $CRF_{\Pi^*}$ sea mínimo.
 
 ---
 

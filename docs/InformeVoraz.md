@@ -16,29 +16,23 @@ El riego se realiza de manera **secuencial**, sin superposición, y el tiempo de
 
 ## 1. Formalización del problema
 
-Sea una finca:
-$$
-F = \langle T_0, T_1, \ldots, T_{n-1} \rangle,
-$$
-donde cada tablón está definido como:
-$$
-T_i = \langle ts_i, tr_i, p_i \rangle.
-$$
+Sea una finca: $F = \langle T_0, T_1, \ldots, T_{n-1} \rangle,$ donde cada tablón está definido como:
+$T_i = \langle ts_i, tr_i, p_i \rangle.$
 
 Una **programación de riego** es una permutación:
-$$
-\Pi = \langle \pi_0, \pi_1, \ldots, \pi_{n-1} \rangle
-$$
+$ \Pi = \langle \pi_0, \pi_1, \ldots, \pi_{n-1} \rangle$
 que indica el orden en que serán regados los tablones.
 
 El tiempo de inicio del riego para cada tablón se calcula como:
 $$
-t_{\Pi_{\pi_0}} = 0, \quad t_{\Pi_{\pi_j}} = t_{\Pi_{\pi_{j-1}}} + tr_{\pi_{j-1}}, \quad j \ge 1.
+t_{\Pi_{\pi_0}} = 0,\quad
+t_{\Pi_{\pi_j}} = t_{\Pi_{\pi_{j-1}}} + tr_{\pi_{j-1}} \text{ para } j \ge 1
 $$
 
 El **costo total** (sufrimiento) asociado a una programación $\Pi$ es:
+
 $$
-CRF_{\Pi} = \sum_{i=0}^{n-1} p_i \times \max(0, (t_{\Pi_i} + tr_i) - ts_i)
+CRF_{\Pi}[i] = p_i \times \max(0, (t_{\Pi_i} + tr_i) - ts_i)
 $$
 
 El objetivo es encontrar una permutación $\Pi$ que minimice $CRF_{\Pi}$.
@@ -83,9 +77,7 @@ Salida: (Π, CRFΠ)
 ```
 
 Formalmente, la permutación voraz se define como:
-$$
-\Pi_{voraz} = \text{argsort}_i \left(-\frac{p_i}{ts_i}, tr_i \right)
-$$
+$ \Pi_{voraz} = \text{argsort}_i \left(-\frac{p_i}{ts_i}, tr_i \right)$
 
 ---
 
@@ -115,9 +107,7 @@ def roV(finca):
 ## 4. Ejemplo aplicado
 
 Para la finca:
-$$
-F_1 = \langle (10,3,4), (5,3,3), (2,2,1), (8,1,1), (6,4,2) \rangle
-$$
+$ F_1 = \langle (10,3,4), (5,3,3), (2,2,1), (8,1,1), (6,4,2) \rangle $
 
 Se calculan las razones $p_i / ts_i$:
 
@@ -130,9 +120,7 @@ Se calculan las razones $p_i / ts_i$:
 | 4 | 6 | 4 | 2 | 0.33 | ↓ |
 
 El orden resultante:
-$$
-\Pi_{voraz} = \langle 1, 2, 0, 4, 3 \rangle
-$$
+$ \Pi_{voraz} = \langle 1, 2, 0, 4, 3 \rangle $
 
 Luego, el algoritmo calcula los tiempos de inicio, fin y penalizaciones con `calculoCostoPerm`, obteniendo el costo total $CRF_{\Pi_{voraz}}$.
 
@@ -144,16 +132,12 @@ Luego, el algoritmo calcula los tiempos de inicio, fin y penalizaciones con `cal
 - Cálculo del costo: $O(n)$  
 
 Por tanto, la complejidad temporal total es:
-$$
-O(n \log n)
-$$
+$ O(n \log n) $
 
 Complejidad espacial:
-$$
-O(n)
-$$
+$ O(n) $
 
-En contraste con fuerza bruta ($O(n! \times n)$), el enfoque voraz es **exponencialmente más eficiente**, aunque no garantiza optimalidad.
+En contraste con fuerza bruta que es $ O(n! \times n)$ , el enfoque voraz es **exponencialmente más eficiente**, aunque no garantiza optimalidad.
 
 ---
 
