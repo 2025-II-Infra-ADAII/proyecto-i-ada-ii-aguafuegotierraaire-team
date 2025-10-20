@@ -1,15 +1,14 @@
-# Codiguito para Solución por fuerza brurisisisisisima
+# Codiguito para Solución por fuerza brutisisisisisima
 from itertools import permutations
 
 def leer_finca(route):
     ruta = route
     with open(ruta, 'r') as f:
+       
         lineas = [l.strip() for l in f.readlines() if l.strip()]
     n = int(lineas[0])
     finca = [tuple(map(int, l.split(','))) for l in lineas[1:n+1]]
     return finca
-
-
 
 def calcular_tiempos_inicio(finca, permutacion):
     tiempos = {}
@@ -33,23 +32,25 @@ def calculoCostoPerm(finca, permutacion):
         costo_total += penalizacion
     return costo_total
 
-
-def roFB(finca):
+def roV(finca):
+    """
+    Algoritmo voraz:
+    Ordena los tablones por la razón p/ts descendente (mayor prioridad y menor tiempo de supervivencia primero),
+    en caso de empate, por menor tiempo de riego (tr).
+    Devuelve (permutacion, costo)
+    """
     n = len(finca)
     if n == 0:
         return ([], 0)
-    
-    indices = list(range(n))
-    mejor_costo = float('inf')
-    mejor_permutacion = None
 
-    for permutacion in permutations(indices):
-        costo = calculoCostoPerm(finca, permutacion)
-        if costo < mejor_costo:
-            mejor_costo = costo
-            mejor_permutacion = permutacion
-    
-    return (list(mejor_permutacion), mejor_costo)
+    # Orden voraz: prioridad alta y supervivencia baja primero
+    indices_ordenados = sorted(range(n),
+                               key=lambda i: (-finca[i][2] / finca[i][0], finca[i][1]))
+
+    # Calculamos costo igual que en fuerza bruta
+    costo = calculoCostoPerm(finca, indices_ordenados)
+    return (indices_ordenados, costo)
 
 def main(p):
-    return roFB(leer_finca(p))[1]
+    return roV(leer_finca(p))[1]
+    
