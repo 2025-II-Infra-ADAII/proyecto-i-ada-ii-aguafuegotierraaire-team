@@ -25,7 +25,7 @@ jobs:
         
         run: |
           python -m pip install --upgrade pip
-          pip install tkinter
+          pip install tk
 
       - name: Compile project
         run: python -m compileall .
