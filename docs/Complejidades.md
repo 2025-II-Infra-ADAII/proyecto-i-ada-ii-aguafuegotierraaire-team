@@ -1,6 +1,9 @@
 # 📊 Análisis de Complejidad Computacional
 
 ## 1. Complejidad Temporal Teórica - Fuerza Bruta
+## Introducción
+
+Este análisis presenta la evaluación de complejidad del algoritmo de Fuerza Bruta (roFB) para el Problema del Riego Óptimo. El enfoque de fuerza bruta representa la estrategia más directa y garantiza optimalidad mediante la exploración exhaustiva de todas las permutaciones posibles, aunque su naturaleza factorial limita severamente su aplicabilidad práctica.
 
 ### 1.1. Descomposición del Algoritmo
 
@@ -163,6 +166,10 @@ Complejidad $O(n)$
 
 # 📊 Análisis de Complejidad Computacional - Algoritmo Voraz
 ## 1. Complejidad Temporal Teórica - Algoritmo Voraz
+## Introducción:
+
+Este análisis examina la complejidad del algoritmo Voraz (roV), que implementa una estrategia heurística basada en decisiones locales óptimas. A diferencia de la fuerza bruta, este enfoque sacrifica optimalidad garantizada por ganancias exponenciales en eficiencia, siendo adecuado para instancias grandes del problema donde la optimalidad absoluta no es crítica.
+
 ### 1.1. Descomposición del Algoritmo
 El algoritmo voraz sigue la siguiente estructura:
 
@@ -357,7 +364,11 @@ $$
 
 
 # 📊 Análisis de Complejidad Computacional - Programación Dinámica
+
 ## 1. Complejidad Temporal Teórica - Programación Dinámica
+
+Este análisis evalúa el algoritmo de Programación Dinámica (roDP), que equilibra optimalidad y eficiencia mediante el principio de optimalidad de Bellman. La estrategia explora sistemáticamente todos los subconjuntos de tablones, ofreciendo optimalidad garantizada con complejidad exponencial pero más manejable que la fuerza bruta, posicionándose como la solución óptima para instancias medianas.
+
 ### 1.1. Descomposición del Algoritmo
 
 El algoritmo de programación dinámica sigue la siguiente estructura:
