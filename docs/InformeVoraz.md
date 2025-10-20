@@ -20,7 +20,7 @@ Sea una finca: $F = \langle T_0, T_1, \ldots, T_{n-1} \rangle,$ donde cada tabl�
 $T_i = \langle ts_i, tr_i, p_i \rangle.$
 
 Una **programación de riego** es una permutación:
-$ \Pi = \langle \pi_0, \pi_1, \ldots, \pi_{n-1} \rangle$
+$\Pi = \langle \pi_0, \pi_1, \ldots, \pi_{n-1} \rangle$
 que indica el orden en que serán regados los tablones.
 
 El tiempo de inicio del riego para cada tablón se calcula como:
