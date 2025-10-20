@@ -1,5 +1,6 @@
 # Codiguito para Solución por fuerza brurisisisisisima
 from itertools import permutations
+import time as tm
 
 def leer_finca(route):
     ruta = route
@@ -35,6 +36,7 @@ def calculoCostoPerm(finca, permutacion):
 
 
 def roFB(finca):
+    ti = tm.time()
     n = len(finca)
     if n == 0:
         return ([], 0)
@@ -48,6 +50,14 @@ def roFB(finca):
         if costo < mejor_costo:
             mejor_costo = costo
             mejor_permutacion = permutacion
+    
+    tf = tm.time()
+    print(f"Ingenuo tamaño: {n} - tiempo: {tf-ti}")
+    output = f"riegoOptimo-FuerzBrut:{n}"
+    with open(output, 'w') as salida:
+        salida.write(f"{n}")
+        for idx in mejor_permutacion:
+            salida.write(f"{idx}")
     
     return (list(mejor_permutacion), mejor_costo)
 

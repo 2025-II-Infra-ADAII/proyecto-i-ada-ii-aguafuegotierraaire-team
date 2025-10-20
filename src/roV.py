@@ -1,5 +1,6 @@
 # Codiguito para Solución por fuerza brutisisisisisima
 from itertools import permutations
+import time as tm
 
 def leer_finca(route):
     ruta = route
@@ -33,6 +34,8 @@ def calculoCostoPerm(finca, permutacion):
     return costo_total
 
 def roV(finca):
+
+    ti = tm.time()
     """
     Algoritmo voraz:
     Ordena los tablones por la razón p/ts descendente (mayor prioridad y menor tiempo de supervivencia primero),
@@ -49,6 +52,14 @@ def roV(finca):
 
     # Calculamos costo igual que en fuerza bruta
     costo = calculoCostoPerm(finca, indices_ordenados)
+    tf = tm.time()
+    print(f"Voraz tamaño: {n} - tiempo: {tf-ti}")
+    output = f"riegoOptimo-Dinamico:{n}"
+    with open(output, 'w') as salida:
+        salida.write(f"{n}")
+        for idx in indices_ordenados:
+            salida.write(f"{idx}")
+    
     return (indices_ordenados, costo)
 
 def main(p):

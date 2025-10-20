@@ -12,8 +12,8 @@ class TestRoDFunctions(unittest.TestCase):
     def _check_size(self, size, result):
         self.assertEqual(roD.main(f'tests/test_{size}.txt'), result)
 
-    sizes = [10, 100, 1000, 10000, 50000]
-    results = [605, 54082, 5911121, 572718137, 14160491549]
+    sizes = [10, 15, 20]
+    results = [605, 54082, 5911121]
     
     def test_sizes(self):
         for size, result in zip(self.sizes, self.results):

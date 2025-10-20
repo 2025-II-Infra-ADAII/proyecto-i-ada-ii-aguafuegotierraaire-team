@@ -2,6 +2,7 @@
 from itertools import permutations
 from math import inf
 from functools import lru_cache
+import time as tm
 
 def leer_finca(route):
     ruta = route
@@ -26,6 +27,7 @@ def roDP(finca):
     Returns:
         (costo_minimo, permutacion_optima)
     """
+    ti = tm.time()
     n = len(finca)
     
     # Caso base
@@ -91,7 +93,13 @@ def roDP(finca):
         mask_actual ^= (1 << ultimo)  # Quitar el último tablón
     
     permutacion.reverse()
-   
+    tf = tm.time()
+    print(f"Dinamico tamaño: {n} - tiempo: {tf-ti}")
+    output = f"riegoOptimo-Dinamico:{n}"
+    with open(output, 'w') as salida:
+        salida.write(f"{n}")
+        for idx in permutacion:
+            salida.write(f"{idx}")
     return permutacion, int(costo_minimo)
 
 def main(p):
